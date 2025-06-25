@@ -12,8 +12,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-public class GameBoard {
+@Entity(name = "game_board") // table is a reserved name in H2
+public class Table {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,10 +29,10 @@ public class GameBoard {
     @ManyToOne
     private Session session;
 
-    @OneToMany(mappedBy = "gameBoard", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
-    public GameBoard(String gameName, int maxPlayers, LocalDateTime startTime, int duration, Session session) {
+    public Table(String gameName, int maxPlayers, LocalDateTime startTime, int duration, Session session) {
         this.gameName = gameName;
         this.maxPlayers = maxPlayers;
         this.startTime = startTime;

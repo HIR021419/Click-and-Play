@@ -13,8 +13,8 @@ public class Inscription {
     private Long id;
 
     @ManyToOne
-    private AppUser appUser;
+    private User user;
 
     @ManyToOne
-    private GameBoard gameBoard;
+    private Table table;
 }

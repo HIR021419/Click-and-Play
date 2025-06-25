@@ -9,8 +9,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-public class AppUser {
+@Entity( name = "app_user") // "user is a reserved name in H2"
+public class User {
     @Id
     private String username;
 
@@ -23,10 +23,10 @@ public class AppUser {
 
     private boolean firstSession = true;
 
-    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
-    public AppUser(String username, String password, Role role, boolean contributor, boolean firstSession) {
+    public User(String username, String password, Role role, boolean contributor, boolean firstSession) {
         this.username = username;
         this.password = password;
         this.role = role;

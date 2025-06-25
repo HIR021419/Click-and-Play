@@ -22,10 +22,10 @@ public class DataInitializer {
         return args -> {
 
             // USERS
-            AppUser admin = new AppUser("admin", "{noop}admin", Role.ADMIN, true, false);
-            AppUser animator = new AppUser("animateur", "{noop}anim", Role.ANIMATOR, true, false);
-            AppUser meeple = new AppUser("meeple", "{noop}meeple", Role.PLAYER, false, true);
-            AppUser goldenMeeple = new AppUser("goldenmeeple", "{noop}gold", Role.PLAYER, true, false);
+            User admin = new User("admin", "{noop}admin", Role.ADMIN, true, false);
+            User animator = new User("animateur", "{noop}anim", Role.ANIMATOR, true, false);
+            User meeple = new User("meeple", "{noop}meeple", Role.PLAYER, false, true);
+            User goldenMeeple = new User("goldenmeeple", "{noop}gold", Role.PLAYER, true, false);
 
             userRepo.save(admin);
             userRepo.save(animator);
@@ -55,39 +55,39 @@ public class DataInitializer {
             sessionRepo.save(session2);
 
             // TABLES
-            GameBoard gameBoard1 = new GameBoard();
-            gameBoard1.setGameName("Loup-Garou");
-            gameBoard1.setStartTime(session1.getStartTime());
-            gameBoard1.setDuration(90); // minutes
-            gameBoard1.setMaxPlayers(6);
-            gameBoard1.setSession(session1);
-            tableRepo.save(gameBoard1);
+            Table table1 = new Table();
+            table1.setGameName("Loup-Garou");
+            table1.setStartTime(session1.getStartTime());
+            table1.setDuration(90); // minutes
+            table1.setMaxPlayers(6);
+            table1.setSession(session1);
+            tableRepo.save(table1);
 
-            GameBoard gameBoard2 = new GameBoard();
-            gameBoard2.setGameName("Table Libre");
-            gameBoard2.setStartTime(session1.getStartTime().plusMinutes(90));
-            gameBoard2.setDuration(90);
-            gameBoard2.setMaxPlayers(room1.getCapacity()); // ne compte pas dans capacité
-            gameBoard2.setSession(session1);
-            tableRepo.save(gameBoard2);
+            Table table2 = new Table();
+            table2.setGameName("Table Libre");
+            table2.setStartTime(session1.getStartTime().plusMinutes(90));
+            table2.setDuration(90);
+            table2.setMaxPlayers(room1.getCapacity()); // ne compte pas dans capacité
+            table2.setSession(session1);
+            tableRepo.save(table2);
 
-            GameBoard gameBoard3 = new GameBoard();
-            gameBoard3.setGameName("Donjons & Dragons");
-            gameBoard3.setStartTime(session2.getStartTime());
-            gameBoard3.setDuration(120);
-            gameBoard3.setMaxPlayers(5);
-            gameBoard3.setSession(session2);
-            tableRepo.save(gameBoard3);
+            Table table3 = new Table();
+            table3.setGameName("Donjons & Dragons");
+            table3.setStartTime(session2.getStartTime());
+            table3.setDuration(120);
+            table3.setMaxPlayers(5);
+            table3.setSession(session2);
+            tableRepo.save(table3);
 
             // INSCRIPTION
             Inscription insc1 = new Inscription();
-            insc1.setAppUser(goldenMeeple);
-            insc1.setGameBoard(gameBoard1);
+            insc1.setUser(goldenMeeple);
+            insc1.setTable(table1);
             inscriptionRepo.save(insc1);
 
             Inscription insc2 = new Inscription();
-            insc2.setAppUser(meeple);
-            insc2.setGameBoard(gameBoard2);
+            insc2.setUser(meeple);
+            insc2.setTable(table2);
             inscriptionRepo.save(insc2);
         };
     }
