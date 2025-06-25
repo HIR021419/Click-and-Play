@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class User {
+public class AppUser {
     @Id
     private String username;
 
@@ -23,10 +23,10 @@ public class User {
 
     private boolean firstSession = true;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
-    public User(String username, String password, Role role, boolean contributor, boolean firstSession) {
+    public AppUser(String username, String password, Role role, boolean contributor, boolean firstSession) {
         this.username = username;
         this.password = password;
         this.role = role;

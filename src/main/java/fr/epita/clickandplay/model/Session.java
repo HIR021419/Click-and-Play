@@ -29,7 +29,7 @@ public class Session {
     private Room room;
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Table> tables = new HashSet<>();
+    private Set<GameBoard> gameBoards = new HashSet<>();
 
     public Session(String name, LocalDateTime startTime, int duration, Room room) {
         this.name = name;

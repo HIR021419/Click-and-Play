@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Table {
+public class GameBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,10 +29,10 @@ public class Table {
     @ManyToOne
     private Session session;
 
-    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "gameBoard", cascade = CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
 
-    public Table(String gameName, int maxPlayers, LocalDateTime startTime, int duration, Session session) {
+    public GameBoard(String gameName, int maxPlayers, LocalDateTime startTime, int duration, Session session) {
         this.gameName = gameName;
         this.maxPlayers = maxPlayers;
         this.startTime = startTime;
