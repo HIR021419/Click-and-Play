@@ -1,12 +1,17 @@
-package fr.epita.clickandplay.table;
+package fr.epita.clickandplay.model;
 
-import fr.epita.clickandplay.inscription.Inscription;
-import fr.epita.clickandplay.session.Session;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Table {
     @Id
@@ -26,4 +31,12 @@ public class Table {
 
     @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
+
+    public Table(String gameName, int maxPlayers, LocalDateTime startTime, int duration, Session session) {
+        this.gameName = gameName;
+        this.maxPlayers = maxPlayers;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.session = session;
+    }
 }

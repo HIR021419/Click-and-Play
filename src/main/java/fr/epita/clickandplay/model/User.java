@@ -1,10 +1,14 @@
-package fr.epita.clickandplay.user;
+package fr.epita.clickandplay.model;
 
-import fr.epita.clickandplay.inscription.Inscription;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 public class User {
     @Id
@@ -21,4 +25,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Inscription> inscriptions = new HashSet<>();
+
+    public User(String username, String password, Role role, boolean contributor, boolean firstSession) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.contributor = contributor;
+        this.firstSession = firstSession;
+    }
 }

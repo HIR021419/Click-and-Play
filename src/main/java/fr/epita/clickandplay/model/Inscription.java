@@ -1,9 +1,11 @@
-package fr.epita.clickandplay.inscription;
+package fr.epita.clickandplay.model;
 
-import fr.epita.clickandplay.table.Table;
-import fr.epita.clickandplay.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class Inscription {
     @Id
