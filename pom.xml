@@ -15,7 +15,26 @@
 	<description>Click-and-Play</description>
 	<url/>
 	<developers>
-		<developer/>
+		<developer>
+			<id>yann.lemetayer</id>
+			<name>Yann Lemétayer</name>
+			<email>yann.lemetayer@epita.fr</email>
+		</developer>
+		<developer>
+			<id>basile.sens</id>
+			<name>Basile Sens</name>
+			<email>basile.sens@epita.fr</email>
+		</developer>
+		<developer>
+			<id>pierre.maunier</id>
+			<name>Pierre Maunier</name>
+			<email>pierre.maunier@epita.fr</email>
+		</developer>
+		<developer>
+			<id>alex.blanco</id>
+			<name>Alex Blanco</name>
+			<email>alex.blanco@epita.fr</email>
+		</developer>
 	</developers>
 	<scm>
 		<connection/>
