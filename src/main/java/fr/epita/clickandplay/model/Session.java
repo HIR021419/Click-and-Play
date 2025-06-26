@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -30,11 +29,4 @@ public class Session {
 
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Table> tables = new HashSet<>();
-
-    public Session(String name, LocalDateTime startTime, int duration, Room room) {
-        this.name = name;
-        this.startTime = startTime;
-        this.duration = duration;
-        this.room = room;
-    }
 }
