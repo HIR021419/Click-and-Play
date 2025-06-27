@@ -9,28 +9,28 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/registrations")
 public class InscriptionController {
 
-    private final InscriptionService inscriptionService;
+	private final InscriptionService inscriptionService;
 
-    @Autowired
-    public InscriptionController(InscriptionService inscriptionService) {
-        this.inscriptionService = inscriptionService;
-    }
+	@Autowired
+	public InscriptionController(InscriptionService inscriptionService) {
+		this.inscriptionService = inscriptionService;
+	}
 
-    /**
-     * S’inscrit à une table donnée
-     */
-    @PostMapping("/{tableId}")
-    public ResponseEntity<String> registerToTable(@PathVariable Long tableId) {
-        inscriptionService.register(tableId);
-        return ResponseEntity.ok("Inscription réussie.");
-    }
+	/**
+	 * S’inscrit à une table donnée
+	 */
+	@PostMapping("/{tableId}")
+	public ResponseEntity<String> registerToTable(@PathVariable Long tableId) {
+		inscriptionService.register(tableId);
+		return ResponseEntity.ok("Inscription réussie.");
+	}
 
-    /**
-     * Se désinscrit d’une table
-     */
-    @DeleteMapping("/{tableId}")
-    public ResponseEntity<String> unregisterFromTable(@PathVariable Long tableId) {
-        inscriptionService.unregister(tableId);
-        return ResponseEntity.ok("Désinscription réussie.");
-    }
+	/**
+	 * Se désinscrit d’une table
+	 */
+	@DeleteMapping("/{tableId}")
+	public ResponseEntity<String> unregisterFromTable(@PathVariable Long tableId) {
+		inscriptionService.unregister(tableId);
+		return ResponseEntity.ok("Désinscription réussie.");
+	}
 }

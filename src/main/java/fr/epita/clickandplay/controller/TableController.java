@@ -14,38 +14,40 @@ import java.util.List;
 @RequestMapping("/api")
 public class TableController {
 
-    private final TableService tableService;
+	private final TableService tableService;
 
-    @Autowired
-    public TableController(TableService tableService) {
-        this.tableService = tableService;
-    }
+	@Autowired
+	public TableController(TableService tableService) {
+		this.tableService = tableService;
+	}
 
-    /**
-     * Liste les tables pour une session donnée
-     */
-    @GetMapping("/sessions/{sessionId}/tables")
-    public ResponseEntity<List<TableDto>> getTablesForSession(@PathVariable Long sessionId) {
-        return ResponseEntity.ok(tableService.getTablesForSession(sessionId));
-    }
+	/**
+	 * Liste les tables pour une session donnée
+	 */
+	@GetMapping("/sessions/{sessionId}/tables")
+	public ResponseEntity<List<TableDto>> getTablesForSession(@PathVariable Long sessionId) {
+		return ResponseEntity.ok(tableService.getTablesForSession(sessionId));
+	}
 
-    /**
-     * Crée une table dans une session (réservé aux animateurs ou admin)
-     */
-    @PostMapping("/sessions/{sessionId}/tables")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ANIMATOR')")
-    public ResponseEntity<TableDto> createTable(@PathVariable Long sessionId,
-                                                @RequestBody TableDto dto) {
-        return new ResponseEntity<>(tableService.createTable(sessionId, dto), HttpStatus.CREATED);
-    }
+	/**
+	 * Crée une table dans une session (réservé aux animateurs ou admin)
+	 */
+	@PostMapping("/sessions/{sessionId}/tables")
+	@PreAuthorize("hasAnyRole('ADMIN', 'ANIMATOR')")
+	public ResponseEntity<TableDto> createTable(
+			@PathVariable Long sessionId,
+			@RequestBody TableDto dto
+	) {
+		return new ResponseEntity<>(tableService.createTable(sessionId, dto), HttpStatus.CREATED);
+	}
 
-    /**
-     * Supprime une table et notifie les inscrits
-     */
-    @DeleteMapping("/tables/{tableId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ANIMATOR')")
-    public ResponseEntity<Void> deleteTable(@PathVariable Long tableId) {
-        tableService.deleteTable(tableId);
-        return ResponseEntity.noContent().build();
-    }
+	/**
+	 * Supprime une table et notifie les inscrits
+	 */
+	@DeleteMapping("/tables/{tableId}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'ANIMATOR')")
+	public ResponseEntity<Void> deleteTable(@PathVariable Long tableId) {
+		tableService.deleteTable(tableId);
+		return ResponseEntity.noContent().build();
+	}
 }

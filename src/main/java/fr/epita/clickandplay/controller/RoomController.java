@@ -13,27 +13,27 @@ import java.util.List;
 @RequestMapping("/api/rooms")
 public class RoomController {
 
-    private final RoomService roomService;
+	private final RoomService roomService;
 
-    @Autowired
-    public RoomController(RoomService roomService) {
-        this.roomService = roomService;
-    }
+	@Autowired
+	public RoomController(RoomService roomService) {
+		this.roomService = roomService;
+	}
 
-    /**
-     * Liste toutes les salles disponibles
-     */
-    @GetMapping
-    public ResponseEntity<List<RoomDto>> getAllRooms() {
-        return ResponseEntity.ok(roomService.getAllRooms());
-    }
+	/**
+	 * Liste toutes les salles disponibles
+	 */
+	@GetMapping
+	public ResponseEntity<List<RoomDto>> getAllRooms() {
+		return ResponseEntity.ok(roomService.getAllRooms());
+	}
 
-    /**
-     * Crée une salle (réservé à l'admin)
-     */
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto dto) {
-        return ResponseEntity.ok(roomService.createRoom(dto));
-    }
+	/**
+	 * Crée une salle (réservé à l'admin)
+	 */
+	@PostMapping
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto dto) {
+		return ResponseEntity.ok(roomService.createRoom(dto));
+	}
 }

@@ -2,7 +2,6 @@ package fr.epita.clickandplay.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -14,19 +13,19 @@ import java.util.Set;
 @Entity
 public class Session {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
+	private String name;
 
-    private LocalDateTime startTime;
+	private LocalDateTime startTime;
 
-    private int duration;
+	private int duration;
 
-    @ManyToOne
-    private Room room;
+	@ManyToOne
+	private Room room;
 
-    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Table> tables = new HashSet<>();
+	@OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Table> tables = new HashSet<>();
 }

@@ -8,13 +8,13 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Inscription {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    private User user;
+	@ManyToOne
+	private User user;
 
-    @ManyToOne
-    private Table table;
+	@ManyToOne
+	private Table table;
 }

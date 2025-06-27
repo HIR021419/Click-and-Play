@@ -9,5 +9,4 @@ public class ClickAndPlayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClickAndPlayApplication.class, args);
 	}
-
 }

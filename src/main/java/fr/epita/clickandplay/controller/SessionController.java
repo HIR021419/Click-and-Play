@@ -14,37 +14,45 @@ import java.util.List;
 @RequestMapping("/api/sessions")
 public class SessionController {
 
-    private final SessionService sessionService;
+	private final SessionService sessionService;
 
-    @Autowired
-    public SessionController(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
+	@Autowired
+	public SessionController(SessionService sessionService) {
+		this.sessionService = sessionService;
+	}
 
-    /**
-     * Récupère toutes les sessions à venir
-     */
-    @GetMapping
-    public ResponseEntity<List<SessionDto>> getAllUpcomingSessions() {
-        return ResponseEntity.ok(sessionService.getAllFutureSessions());
-    }
+	/**
+	 * Récupère toutes les sessions à venir
+	 */
+	@GetMapping
+	public ResponseEntity<List<SessionDto>> getAllUpcomingSessions() {
+		return ResponseEntity.ok(sessionService.getAllFutureSessions());
+	}
 
-    /**
-     * Crée une nouvelle session (réservé à l'administrateur)
-     */
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<SessionDto> createSession(@RequestBody SessionDto dto) {
-        return new ResponseEntity<>(sessionService.createSession(dto), HttpStatus.CREATED);
-    }
+	/**
+	 * Récupère une session par id
+	 */
+	@GetMapping("/{sessionId}")
+	public ResponseEntity<SessionDto> getSession(@PathVariable Long sessionId) {
+		return ResponseEntity.ok(sessionService.getSessionById(sessionId));
+	}
 
-    /**
-     * Supprime une session (et notifie les participants)
-     */
-    @DeleteMapping("/{sessionId}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> deleteSession(@PathVariable Long sessionId) {
-        sessionService.deleteSession(sessionId);
-        return ResponseEntity.noContent().build();
-    }
+	/**
+	 * Crée une nouvelle session (réservé à l'administrateur)
+	 */
+	@PostMapping
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<SessionDto> createSession(@RequestBody SessionDto dto) {
+		return new ResponseEntity<>(sessionService.createSession(dto), HttpStatus.CREATED);
+	}
+
+	/**
+	 * Supprime une session (et notifie les participants)
+	 */
+	@DeleteMapping("/{sessionId}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Void> deleteSession(@PathVariable Long sessionId) {
+		sessionService.deleteSession(sessionId);
+		return ResponseEntity.noContent().build();
+	}
 }
