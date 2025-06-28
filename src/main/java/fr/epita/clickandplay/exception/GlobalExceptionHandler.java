@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleOtherErrors(Exception ex) {
-		return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Une erreur interne est survenue.");
+		return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
 	}
 
 	private ResponseEntity<Object> buildResponse(HttpStatus status, String message) {

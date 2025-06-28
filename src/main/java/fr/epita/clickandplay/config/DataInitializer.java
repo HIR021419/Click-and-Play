@@ -2,14 +2,19 @@ package fr.epita.clickandplay.config;
 
 import fr.epita.clickandplay.model.*;
 import fr.epita.clickandplay.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
 @Configuration
 public class DataInitializer {
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Bean
 	public CommandLineRunner initData(
@@ -22,10 +27,10 @@ public class DataInitializer {
 		return args -> {
 
 			// USERS
-			User admin = new User("admin", "{noop}admin", Role.ADMIN, true, false);
-			User animator = new User("animateur", "{noop}anim", Role.ANIMATOR, true, false);
-			User meeple = new User("meeple", "{noop}meeple", Role.PLAYER, false, true);
-			User goldenMeeple = new User("goldenmeeple", "{noop}gold", Role.PLAYER, true, false);
+			User admin = new User("admin", passwordEncoder.encode("admin"), Role.ADMIN, true, false);
+			User animator = new User("animateur", passwordEncoder.encode("anim"), Role.ANIMATOR, true, false);
+			User meeple = new User("meeple", passwordEncoder.encode("meeple"), Role.PLAYER, false, true);
+			User goldenMeeple = new User("goldenmeeple", passwordEncoder.encode("gold"), Role.PLAYER, true, false);
 
 			userRepo.save(admin);
 			userRepo.save(animator);

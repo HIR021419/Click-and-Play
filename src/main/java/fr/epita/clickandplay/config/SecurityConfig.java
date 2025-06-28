@@ -30,6 +30,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/sessions/**").permitAll().anyRequest().authenticated())
 				.sessionManagement(session -> session
 						.maximumSessions(1)).userDetailsService(userDetailsService)
+				.httpBasic(httpBasic -> httpBasic.authenticationEntryPoint((req, rsp, e) -> rsp.sendError(401)))
 				.build();
 	}
 
