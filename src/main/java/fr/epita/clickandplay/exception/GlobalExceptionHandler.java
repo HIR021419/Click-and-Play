@@ -2,6 +2,7 @@ package fr.epita.clickandplay.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -28,6 +29,11 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(ForbiddenException.class)
 	public ResponseEntity<Object> handleForbidden(ForbiddenException ex) {
+		return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+	}
+
+	@ExceptionHandler(AuthorizationDeniedException.class)
+	public ResponseEntity<Object> handleAuthorizationDenied(AuthorizationDeniedException ex) {
 		return buildResponse(HttpStatus.FORBIDDEN, ex.getMessage());
 	}
 

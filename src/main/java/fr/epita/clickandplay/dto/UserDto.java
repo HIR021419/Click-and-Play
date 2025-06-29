@@ -1,7 +1,9 @@
 package fr.epita.clickandplay.dto;
 
 import fr.epita.clickandplay.model.User;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class UserDto {
 	public String username;
 	public String role;

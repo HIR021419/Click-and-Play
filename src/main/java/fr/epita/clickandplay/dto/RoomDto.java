@@ -1,7 +1,9 @@
 package fr.epita.clickandplay.dto;
 
 import fr.epita.clickandplay.model.Room;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class RoomDto {
 	public Long id;
 	public String name;
