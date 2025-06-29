@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/sessions")
+
 public class SessionController {
 
 	private final SessionService sessionService;

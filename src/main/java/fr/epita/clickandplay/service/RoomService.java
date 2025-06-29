@@ -38,6 +38,7 @@ public class RoomService {
 		room.setRentPrice(dto.rentPrice);
 
 		room = roomRepository.save(room);
+
 		return new RoomDto(room);
 	}
 }

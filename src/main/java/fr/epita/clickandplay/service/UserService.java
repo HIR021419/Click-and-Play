@@ -1,8 +1,7 @@
 package fr.epita.clickandplay.service;
 
 import fr.epita.clickandplay.dto.UserDto;
-import fr.epita.clickandplay.exception.BadRequestException;
-import fr.epita.clickandplay.exception.NotFoundException;
+import fr.epita.clickandplay.exception.*;
 import fr.epita.clickandplay.model.User;
 import fr.epita.clickandplay.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +19,30 @@ public class UserService {
 		this.userRepository = repo;
 	}
 
-	public UserDto getCurrentUser() {
-		String username = getConnectedUsername();
-		User user = userRepository.findById(username)
+	public User getUserEntity(String username) {
+		return userRepository.findById(username)
 				.orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
-		return new UserDto(user);
+	}
+
+	public void saveUser(User user) {
+		userRepository.save(user);
+	}
+
+	public UserDto getCurrentUser() {
+		return new UserDto(getUserEntity(getConnectedUsername()));
 	}
 
 	public String contribute() {
-		String username = getConnectedUsername();
-		User user = userRepository.findById(username)
-				.orElseThrow(() -> new NotFoundException("Utilisateur non trouvé"));
-
-		if (user.isContributor()) {
-			throw new BadRequestException("L'utilisateur a déjà cotisé.");
-		}
+		User user = getUserEntity(getConnectedUsername());
+		if (user.isContributor()) throw new BadRequestException("L'utilisateur a déjà cotisé.");
 
 		user.setContributor(true);
-		userRepository.save(user);
-
-		System.out.println("[API COTISATION] " + username + " vient de cotiser.");
-
+		saveUser(user);
+		System.out.println("[API COTISATION] " + user.getUsername() + " vient de cotiser.");
 		return "Cotisation enregistrée.";
 	}
 
+	/* ----------- helpers ----------- */
 	private String getConnectedUsername() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return auth.getName();

@@ -1,11 +1,8 @@
 package fr.epita.clickandplay.service;
 
 import fr.epita.clickandplay.dto.TableDto;
-import fr.epita.clickandplay.exception.ConflictException;
-import fr.epita.clickandplay.exception.NotFoundException;
-import fr.epita.clickandplay.model.Session;
-import fr.epita.clickandplay.model.Table;
-import fr.epita.clickandplay.repository.ISessionRepository;
+import fr.epita.clickandplay.exception.*;
+import fr.epita.clickandplay.model.*;
 import fr.epita.clickandplay.repository.ITableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,35 +15,38 @@ import java.util.stream.Collectors;
 public class TableService {
 
 	private final ITableRepository tableRepository;
-	private final ISessionRepository sessionRepository;
+	private final SessionService   sessionService;
 
 	@Autowired
-	public TableService(ITableRepository tableRepository, ISessionRepository sessionRepository) {
+	public TableService(ITableRepository tableRepository, SessionService sessionService) {
 		this.tableRepository = tableRepository;
-		this.sessionRepository = sessionRepository;
+		this.sessionService  = sessionService;
 	}
 
-	public TableDto createTable(Long sessionId, TableDto dto) {
-		Session session = sessionRepository.findById(sessionId)
-				.orElseThrow(() -> new NotFoundException("Séance introuvable"));
+	public Table getTableEntity(Long id) {
+		return tableRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Table introuvable"));
+	}
+
+	public TableDto createTable(TableDto dto) {
+		// On demande la séance au service, pas directement au dépôt
+		Session session = sessionService.getSessionEntity(dto.sessionId);
 
 		LocalDateTime sessionStart = session.getStartTime();
-		LocalDateTime sessionEnd = sessionStart.plusHours(session.getDuration());
+		LocalDateTime sessionEnd   = sessionStart.plusHours(session.getDuration());
 
 		LocalDateTime tableStart = dto.startTime;
-		LocalDateTime tableEnd = tableStart.plusMinutes(dto.duration);
+		LocalDateTime tableEnd   = tableStart.plusMinutes(dto.duration);
 
 		if (tableStart.isBefore(sessionStart) || tableEnd.isAfter(sessionEnd.minusMinutes(15))) {
-			throw new ConflictException(
-					"La partie doit commencer et finir dans la plage horaire de la séance, et se terminer au moins 15 " +
-                            "min avant la fin.");
+			throw new ConflictException("La partie doit commencer et finir dans la plage horaire de la séance, " +
+					"et se terminer au moins 15 min avant la fin.");
 		}
 
 		int totalMaxPlayers = session.getTables().stream()
 				.filter(t -> !"Libre".equalsIgnoreCase(t.getGameName()))
 				.mapToInt(Table::getMaxPlayers)
 				.sum();
-
 		if (totalMaxPlayers + dto.maxPlayers > session.getRoom().getCapacity()) {
 			throw new ConflictException("Capacité de la salle dépassée par l'ajout de cette table.");
 		}
@@ -65,21 +65,15 @@ public class TableService {
 	public void deleteTable(Long tableId) {
 		Table table = tableRepository.findById(tableId)
 				.orElseThrow(() -> new NotFoundException("Table introuvable"));
-
-		table.getInscriptions().forEach(insc -> System.out.println(
-				"[MAIL] À " + insc.getUser().getUsername() + " : la partie '" + table.getGameName() + "' a été annulée."
-										)
+		table.getInscriptions().forEach(insc ->
+				System.out.println("[MAIL] À " + insc.getUser().getUsername() + " : la partie '" +
+						table.getGameName() + "' a été annulée.")
 		);
-
 		tableRepository.delete(table);
 	}
 
 	public List<TableDto> getTablesForSession(Long sessionId) {
-		Session session = sessionRepository.findById(sessionId)
-				.orElseThrow(() -> new NotFoundException("Séance introuvable"));
-
-		return session.getTables().stream()
-				.map(TableDto::new)
-				.collect(Collectors.toList());
+		// délègue à SessionService
+		return sessionService.getTablesForSession(sessionId);
 	}
 }

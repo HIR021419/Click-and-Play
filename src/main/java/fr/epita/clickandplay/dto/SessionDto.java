@@ -1,10 +1,12 @@
 package fr.epita.clickandplay.dto;
 
 import fr.epita.clickandplay.model.Session;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @NoArgsConstructor
 public class SessionDto {
 	public Long id;

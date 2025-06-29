@@ -1,11 +1,13 @@
 package fr.epita.clickandplay.dto;
 
 import fr.epita.clickandplay.model.Table;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 public class TableDto {
 	public Long id;
 	public String gameName;

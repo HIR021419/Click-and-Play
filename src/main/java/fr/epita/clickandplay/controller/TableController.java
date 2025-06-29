@@ -32,13 +32,12 @@ public class TableController {
 	/**
 	 * Crée une table dans une session (réservé aux animateurs ou admin)
 	 */
-	@PostMapping("/sessions/{sessionId}/tables")
+	@PostMapping("/tables")
 	@PreAuthorize("hasAnyRole('ADMIN', 'ANIMATOR')")
 	public ResponseEntity<TableDto> createTable(
-			@PathVariable Long sessionId,
 			@RequestBody TableDto dto
 	) {
-		return new ResponseEntity<>(tableService.createTable(sessionId, dto), HttpStatus.CREATED);
+		return new ResponseEntity<>(tableService.createTable(dto), HttpStatus.CREATED);
 	}
 
 	/**

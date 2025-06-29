@@ -31,7 +31,7 @@ public class UserController {
 	/**
 	 * Effectue une cotisation (une seule fois autorisée)
 	 */
-	@PostMapping("/cotiser")
+	@PostMapping("/contribute")
 	public ResponseEntity<String> contribute() {
 		String message = userService.contribute();
 		return ResponseEntity.ok(message);
