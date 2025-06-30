@@ -1,5 +1,6 @@
 package fr.epita.clickandplay.controller;
 
+import fr.epita.clickandplay.dto.CreateSessionDto;
 import fr.epita.clickandplay.dto.SessionDto;
 import fr.epita.clickandplay.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class SessionController {
 	 */
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<SessionDto> createSession(@RequestBody SessionDto dto) {
+	public ResponseEntity<SessionDto> createSession(@RequestBody CreateSessionDto dto) {
 		return new ResponseEntity<>(sessionService.createSession(dto), HttpStatus.CREATED);
 	}
 

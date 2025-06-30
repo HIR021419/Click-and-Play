@@ -1,5 +1,6 @@
 package fr.epita.clickandplay.controller;
 
+import fr.epita.clickandplay.dto.CreateRoomDto;
 import fr.epita.clickandplay.dto.RoomDto;
 import fr.epita.clickandplay.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class RoomController {
 	 */
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto dto) {
+	public ResponseEntity<RoomDto> createRoom(@RequestBody CreateRoomDto dto) {
 		return ResponseEntity.ok(roomService.createRoom(dto));
 	}
 }
