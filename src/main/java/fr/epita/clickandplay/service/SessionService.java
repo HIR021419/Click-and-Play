@@ -1,5 +1,7 @@
 package fr.epita.clickandplay.service;
 
+import fr.epita.clickandplay.dto.CreateSessionDto;
+import fr.epita.clickandplay.dto.CreateTableDto;
 import fr.epita.clickandplay.dto.SessionDto;
 import fr.epita.clickandplay.dto.TableDto;
 import fr.epita.clickandplay.exception.BadRequestException;
@@ -45,7 +47,7 @@ public class SessionService {
 				.collect(Collectors.toList());
 	}
 
-	public SessionDto createSession(SessionDto dto) {
+	public SessionDto createSession(CreateSessionDto dto) {
 		if (dto.startTime.isBefore(LocalDateTime.now()))
 			throw new BadRequestException("La date de la séance doit être dans le futur.");
 		if (dto.duration <= 0)
@@ -69,16 +71,14 @@ public class SessionService {
 		session.setStartTime(dto.startTime);
 		session.setDuration(dto.duration);
 		session.setRoom(room);
-		sessionRepository.save(session);
+		session = sessionRepository.save(session);
 
-		// Table « Libre » créée via TableService
-		tableService.createTable(new TableDto(
-				0L, "Table Libre", room.getCapacity(),
+		tableService.createTable(new CreateTableDto(
+				"Libre", room.getCapacity(),
 				session.getStartTime(), session.getDuration(), session.getId()
 		));
 
-		dto.id = session.getId();
-		return dto;
+		return new SessionDto(session);
 	}
 
 	public void deleteSession(Long id) {

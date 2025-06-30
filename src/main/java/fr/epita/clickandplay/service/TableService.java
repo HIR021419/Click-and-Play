@@ -1,5 +1,6 @@
 package fr.epita.clickandplay.service;
 
+import fr.epita.clickandplay.dto.CreateTableDto;
 import fr.epita.clickandplay.dto.TableDto;
 import fr.epita.clickandplay.exception.*;
 import fr.epita.clickandplay.model.*;
@@ -28,7 +29,7 @@ public class TableService {
 				.orElseThrow(() -> new NotFoundException("Table introuvable"));
 	}
 
-	public TableDto createTable(TableDto dto) {
+	public TableDto createTable(CreateTableDto dto) {
 		// On demande la séance au service, pas directement au dépôt
 		Session session = sessionService.getSessionEntity(dto.sessionId);
 

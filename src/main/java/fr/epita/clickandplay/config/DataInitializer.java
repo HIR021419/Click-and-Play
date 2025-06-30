@@ -32,17 +32,17 @@ public class DataInitializer {
 			User meeple = new User("meeple", passwordEncoder.encode("meeple"), Role.PLAYER, false, true);
 			User goldenMeeple = new User("goldenmeeple", passwordEncoder.encode("gold"), Role.PLAYER, true, false);
 
-			userRepo.save(admin);
-			userRepo.save(animator);
-			userRepo.save(meeple);
-			userRepo.save(goldenMeeple);
+			admin = userRepo.save(admin);
+			animator = userRepo.save(animator);
+			meeple = userRepo.save(meeple);
+			goldenMeeple = userRepo.save(goldenMeeple);
 
 			// ROOMS
 			Room room1 = new Room("Salle 1", 10, 20.0);
-			roomRepo.save(room1);
+			room1 = roomRepo.save(room1);
 
 			Room room2 = new Room("Salle 2", 8, 15.0);
-			roomRepo.save(room2);
+			room2 = roomRepo.save(room2);
 
 			// SESSIONS
 			Session session1 = new Session();
@@ -50,14 +50,14 @@ public class DataInitializer {
 			session1.setStartTime(LocalDateTime.now().plusDays(2).withHour(18).withMinute(0));
 			session1.setDuration(3);
 			session1.setRoom(room1);
-			sessionRepo.save(session1);
+			session1 = sessionRepo.save(session1);
 
 			Session session2 = new Session();
 			session2.setName("Vendredi Donjons & Dragons");
 			session2.setStartTime(LocalDateTime.now().plusDays(4).withHour(20).withMinute(0));
 			session2.setDuration(4);
 			session2.setRoom(room2);
-			sessionRepo.save(session2);
+			session2 = sessionRepo.save(session2);
 
 			// TABLES
 			Table table1 = new Table();
@@ -66,15 +66,23 @@ public class DataInitializer {
 			table1.setDuration(90);
 			table1.setMaxPlayers(6);
 			table1.setSession(session1);
-			tableRepo.save(table1);
+			table1 = tableRepo.save(table1);
 
 			Table table2 = new Table();
-			table2.setGameName("Table Libre");
-			table2.setStartTime(session1.getStartTime().plusMinutes(90));
-			table2.setDuration(90);
+			table2.setGameName("Libre");
+			table2.setStartTime(session1.getStartTime());
+			table2.setDuration(session1.getDuration() * 60);
 			table2.setMaxPlayers(room1.getCapacity());
 			table2.setSession(session1);
-			tableRepo.save(table2);
+			table2 = tableRepo.save(table2);
+
+			Table table4 = new Table();
+			table4.setGameName("Libre");
+			table4.setStartTime(session2.getStartTime());
+			table4.setDuration(session2.getDuration() * 60);
+			table4.setMaxPlayers(room2.getCapacity());
+			table4.setSession(session2);
+			table4 = tableRepo.save(table4);
 
 			Table table3 = new Table();
 			table3.setGameName("Donjons & Dragons");
@@ -82,18 +90,18 @@ public class DataInitializer {
 			table3.setDuration(120);
 			table3.setMaxPlayers(5);
 			table3.setSession(session2);
-			tableRepo.save(table3);
+			table3 = tableRepo.save(table3);
 
 			// INSCRIPTION
-			Inscription insc1 = new Inscription();
-			insc1.setUser(goldenMeeple);
-			insc1.setTable(table1);
-			inscriptionRepo.save(insc1);
+			Inscription inscription1 = new Inscription();
+			inscription1.setUser(goldenMeeple);
+			inscription1.setTable(table1);
+			inscription1 = inscriptionRepo.save(inscription1);
 
-			Inscription insc2 = new Inscription();
-			insc2.setUser(meeple);
-			insc2.setTable(table2);
-			inscriptionRepo.save(insc2);
+			Inscription inscription2 = new Inscription();
+			inscription2.setUser(goldenMeeple);
+			inscription2.setTable(table3);
+			inscription2 = inscriptionRepo.save(inscription2);
 		};
 	}
 }

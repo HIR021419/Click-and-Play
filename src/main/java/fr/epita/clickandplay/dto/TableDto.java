@@ -22,6 +22,6 @@ public class TableDto {
 		this.maxPlayers = table.getMaxPlayers();
 		this.startTime = table.getStartTime();
 		this.duration = table.getDuration();
-		this.sessionId = table.getId();
+		this.sessionId = table.getSession().getId();
 	}
 }

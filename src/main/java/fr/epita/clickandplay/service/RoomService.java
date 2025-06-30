@@ -1,5 +1,6 @@
 package fr.epita.clickandplay.service;
 
+import fr.epita.clickandplay.dto.CreateRoomDto;
 import fr.epita.clickandplay.dto.RoomDto;
 import fr.epita.clickandplay.exception.NotFoundException;
 import fr.epita.clickandplay.model.Room;
@@ -31,7 +32,7 @@ public class RoomService {
 				.collect(Collectors.toList());
 	}
 
-	public RoomDto createRoom(RoomDto dto) {
+	public RoomDto createRoom(CreateRoomDto dto) {
 		Room room = new Room();
 		room.setName(dto.name);
 		room.setCapacity(dto.capacity);

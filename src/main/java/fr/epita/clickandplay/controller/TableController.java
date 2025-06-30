@@ -1,5 +1,6 @@
 package fr.epita.clickandplay.controller;
 
+import fr.epita.clickandplay.dto.CreateTableDto;
 import fr.epita.clickandplay.dto.TableDto;
 import fr.epita.clickandplay.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class TableController {
 	@PostMapping("/tables")
 	@PreAuthorize("hasAnyRole('ADMIN', 'ANIMATOR')")
 	public ResponseEntity<TableDto> createTable(
-			@RequestBody TableDto dto
+			@RequestBody CreateTableDto dto
 	) {
 		return new ResponseEntity<>(tableService.createTable(dto), HttpStatus.CREATED);
 	}
